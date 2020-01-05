@@ -1,0 +1,38 @@
+## User settings
+xcuserdata/
+*.xcuserstate
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+Packages/
+Package.pins
+Package.resolved
+*.xcodeproj
+.swiftpm
+*.xcworkspace
+
+.build/
+
+# Visual Studio
+/.vs
+/.vscode
+
+# macOS
+.DS_Store
+
+# Generated 
+Sources/ShaderReflection
+Resources/Shaders/SPIRV/*
+Resources/Shaders/Metal/*
+

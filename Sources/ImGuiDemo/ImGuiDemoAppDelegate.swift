@@ -26,9 +26,8 @@ final class ImGuiAppDelegate : ApplicationDelegate {
     
     func applicationRenderedImGui(_ application: Application, frame: UInt64, renderData: ImGui.RenderData, window: Window, scissorRect: ScissorRect) {
         
-        var renderTargetDescriptor = RenderTargetDescriptor(attachmentCount: 1)
-        renderTargetDescriptor.colorAttachments[0] = .init(texture: window.texture)
-        renderTargetDescriptor.colorAttachments[0]!.clearColor = ClearColor()
+        let renderTargetDescriptor = RenderTargetDescriptor(colorAttachments: [.init(texture: window.texture)])
+        frameGraph.addDrawCallbackPass(descriptor: renderTargetDescriptor, colorClearOperations: [.clear(ClearColor())], execute: { _ in })
         
         application.windowFrameGraph.addPass(ImGuiPass(renderData: renderData, renderTargetDescriptor: renderTargetDescriptor))
     }

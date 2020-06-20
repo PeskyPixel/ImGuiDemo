@@ -7,7 +7,6 @@ let package = Package(
     name: "ImGuiDemo",
     platforms: [.macOS(.v10_14)],
     dependencies: [
-        .package(url: "https://github.com/troughton/AppFramework", .branch("master")),
         .package(url: "https://github.com/troughton/SwiftFrameGraph", .branch("master")),
         .package(url: "https://github.com/troughton/SwiftMath", from: "5.0.0"),
     ],
@@ -15,7 +14,7 @@ let package = Package(
         .target(
             name: "ImGuiDemo",
             dependencies: ["AppFramework", "ShaderReflection"],
-            linkerSettings: [.linkedFramework("AppKit")]),
+            linkerSettings: [.linkedFramework("AppKit", .when(platforms: [.macOS]))]),
         .target(name: "ShaderReflection", dependencies: ["SwiftFrameGraph", "SwiftMath"]),
         .testTarget(
             name: "ImGuiDemoTests",

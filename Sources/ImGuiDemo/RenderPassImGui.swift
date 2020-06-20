@@ -9,7 +9,7 @@
 import AppFramework
 import SwiftFrameGraph
 import SwiftMath
-import cimgui
+import CImGui
 import ImGui
 
 import ShaderReflection
@@ -147,7 +147,7 @@ final class ImGuiPass : ReflectableDrawRenderPass {
         let far : Float = 1
         let orthoMatrix = Matrix4x4f.ortho(left: left, right: right, bottom: bottom, top: top, near: near, far: far)
         
-        renderEncoder.pushConstants.uniforms.projectionMatrix = orthoMatrix
+        renderEncoder.pushConstants.projectionMatrix = orthoMatrix
         renderEncoder.set0.textureSampler = ImGuiPass.samplerDescriptor
         
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)

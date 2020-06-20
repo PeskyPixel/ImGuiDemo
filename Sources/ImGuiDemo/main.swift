@@ -5,9 +5,16 @@ import Foundation
 let inflightFrameCount = 3
 
 let rootDirectory = CommandLine.arguments[1]
-let libraryPath = "\(rootDirectory)/Resources/Shaders/Metal/Library.metallib"
 
+#if canImport(Metal)
+let libraryPath = "\(rootDirectory)/Resources/Shaders/Metal/Library.metallib"
 RenderBackend.initialise(api: .metal, libraryPath: libraryPath)
+#elseif canImport(Vulkan)
+let libraryPath = "\(rootDirectory)/Resources/Shaders/Vulkan"
+RenderBackend.initialise(api: .vulkan, libraryPath: libraryPath)
+#else
+fatalError("No supported APIs found")
+#endif
 
 let delegate = ImGuiAppDelegate()
 

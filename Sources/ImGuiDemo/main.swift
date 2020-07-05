@@ -8,10 +8,10 @@ let rootDirectory = CommandLine.arguments[1]
 
 #if canImport(Metal)
 let libraryPath = "\(rootDirectory)/Resources/Shaders/Metal/Library.metallib"
-RenderBackend.initialise(api: .metal, libraryPath: libraryPath)
+RenderBackend.initialise(api: .metal, applicationName: "ImGuiDemo", libraryPath: libraryPath)
 #elseif canImport(Vulkan)
 let libraryPath = "\(rootDirectory)/Resources/Shaders/Vulkan"
-RenderBackend.initialise(api: .vulkan, libraryPath: libraryPath)
+RenderBackend.initialise(api: .vulkan, applicationName: "ImGuiDemo", libraryPath: libraryPath)
 #else
 fatalError("No supported APIs found")
 #endif

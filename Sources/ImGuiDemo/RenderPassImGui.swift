@@ -117,7 +117,6 @@ final class ImGuiPass : ReflectableDrawRenderPass {
     }
     
     func execute(renderCommandEncoder renderEncoder: TypedRenderCommandEncoder<ImGuiPassReflection>) {
-        
         if renderData.vertexBuffer.isEmpty {
             return
         }

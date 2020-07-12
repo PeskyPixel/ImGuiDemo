@@ -39,8 +39,8 @@ ImGuiFragment ImGuiPass_Vertex(ImGuiVertex input) {
 }
 
 [[vk::binding(0, 0)]] sampler textureSampler;
-[[vk::binding(1, 0)]] Texture2D<real4> floatTexture;
-[[vk::binding(2, 0)]] Texture2D<uint4> uintTexture;
+[[vk::binding(1, 0)]] Texture2D<float4> floatTexture;
+// [[vk::binding(2, 0)]] Texture2D<uint4> uintTexture;
 
 [shader("pixel")]
 real4 ImGuiPass_Fragment(ImGuiFragment input) : SV_Target {
@@ -50,9 +50,9 @@ real4 ImGuiPass_Fragment(ImGuiFragment input) : SV_Target {
         case TextureTypeFloat:
             textureColourValue = real4(floatTexture.Sample(textureSampler, input.tex_coords));
             break;
-        case TextureTypeUInt:
-            textureColourValue = real4(uintTexture.Load(int3(int2(input.tex_coords), 0)));
-            break;
+        // case TextureTypeUInt:
+        //     textureColourValue = real4(uintTexture.Load(int3(int2(input.tex_coords), 0)));
+        //     break;
         default:
             textureColourValue = 1.0;
             break;

@@ -1,8 +1,15 @@
 #ifndef Common_hlsl
 #define Common_hlsl
 
-#ifndef real
+#ifdef TARGET_VULKAN
+#define REAL_IS_HALF 0
+#endif
+
+#ifndef REAL_IS_HALF
 #define REAL_IS_HALF 1
+#endif
+
+#if REAL_IS_HALF
 #define real half
 #define real2 half2
 #define real3 half3
@@ -12,10 +19,10 @@
 #define REAL_MAX HALF_MAX
 #define REAL_EPS HALF_EPS
 #else
-#define REAL_IS_HALF 0
 #define REAL_MIN FLT_MIN
 #define REAL_MAX FLT_MAX
 #define REAL_EPS FLT_EPS
+#define real float
 #define real2 float2
 #define real3 float3
 #define real4 float4

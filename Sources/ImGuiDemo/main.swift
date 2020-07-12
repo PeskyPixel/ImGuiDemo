@@ -16,9 +16,11 @@ RenderBackend.initialise(api: .vulkan, applicationName: "ImGuiDemo", libraryPath
 fatalError("No supported APIs found")
 #endif
 
+print("Initialised the render backend")
 let delegate = ImGuiAppDelegate()
 
 let frameGraph = FrameGraph(inflightFrameCount: inflightFrameCount)
+print("Initialised a FrameGraph.")
 
 let scheduler = SDLUpdateScheduler(appDelegate: delegate, windowDelegates: [ImGuiDemoWindow(frameGraph: frameGraph)], windowFrameGraph: frameGraph)
 

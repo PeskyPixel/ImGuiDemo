@@ -35,4 +35,6 @@ Package.resolved
 Sources/ShaderReflection
 Resources/Shaders/SPIRV/*
 Resources/Shaders/Metal/*
-
+/Resources/Shaders/Compiled/*
+/Resources/Shaders/Intermediates/*
+/Sources/ShaderReflection.swift

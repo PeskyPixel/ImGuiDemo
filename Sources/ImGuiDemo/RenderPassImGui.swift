@@ -7,8 +7,8 @@
 //
 
 import AppFramework
-import SwiftFrameGraph
-import SwiftMath
+import Substrate
+import SubstrateMath
 import CImGui
 import ImGui
 

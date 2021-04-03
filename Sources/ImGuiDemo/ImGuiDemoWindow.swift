@@ -7,7 +7,7 @@
 
 import AppFramework
 import ImGui
-import SwiftFrameGraph
+import Substrate
 
 final class ImGuiDemoWindow : WindowDelegate {
     var title: String = "ImGui Demo"
@@ -21,10 +21,10 @@ final class ImGuiDemoWindow : WindowDelegate {
     
     var inputLayers: [InputLayer] = []
     
-    let frameGraph : FrameGraph
+    let renderGraph : RenderGraph
     
-    init(frameGraph: FrameGraph) {
-        self.frameGraph = frameGraph
+    init(renderGraph: RenderGraph) {
+        self.renderGraph = renderGraph
     }
     
     func setup() {

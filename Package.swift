@@ -7,15 +7,14 @@ let package = Package(
     name: "ImGuiDemo",
     platforms: [.macOS(.v10_14)],
     dependencies: [
-        .package(url: "https://github.com/troughton/SwiftFrameGraph", .branch("master")),
-        .package(url: "https://github.com/troughton/SwiftMath", from: "5.0.0"),
+        .package(url: "https://github.com/troughton/Substrate", from: "6.0.6"),
     ],
     targets: [
         .target(
             name: "ImGuiDemo",
             dependencies: ["AppFramework", "ShaderReflection"],
             linkerSettings: [.linkedFramework("AppKit", .when(platforms: [.macOS]))]),
-        .target(name: "ShaderReflection", dependencies: ["SwiftFrameGraph", "SwiftMath"]),
+        .target(name: "ShaderReflection", dependencies: [.product(name: "Substrate", package: "Substrate"), .product(name: "SubstrateMath", package: "Substrate")]),
         .testTarget(
             name: "ImGuiDemoTests",
             dependencies: ["ImGuiDemo"]),

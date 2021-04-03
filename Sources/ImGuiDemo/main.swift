@@ -1,5 +1,5 @@
 import AppFramework
-import SwiftFrameGraph
+import Substrate
 import Foundation
 
 let inflightFrameCount = 3
@@ -16,9 +16,10 @@ RenderBackend.initialise(api: .vulkan, applicationName: "ImGuiDemo", libraryPath
 fatalError("No supported APIs found")
 #endif
 
+GPUResourceUploader.initialise()
+
 let delegate = ImGuiAppDelegate()
 
-let frameGraph = FrameGraph(inflightFrameCount: inflightFrameCount)
+let renderGraph = RenderGraph(inflightFrameCount: inflightFrameCount)
 
-let _ = SDLUpdateScheduler(appDelegate: delegate, windowDelegates: [ImGuiDemoWindow(frameGraph: frameGraph)], windowFrameGraph: frameGraph)
-
+let _ = SDLUpdateScheduler(appDelegate: delegate, windowDelegates: [ImGuiDemoWindow(renderGraph: renderGraph)], windowRenderGraph: renderGraph)

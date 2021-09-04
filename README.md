@@ -2,7 +2,7 @@
 
 A demo of using [Dear ImGui](https://github.com/ocornut/imgui) with [Substrate](https://github.com/troughton/SubstrateRender).
 
-To build it, you’ll need to first install and add to your PATH [DirectXShaderCompiler](https://github.com/microsoft/DirectXShaderCompiler) and [spirv-opt](https://github.com/KhronosGroup/SPIRV-Tools), then run:
+To build it, you’ll need to first install and add to your PATH [DirectXShaderCompiler](https://github.com/microsoft/DirectXShaderCompiler), [spirv-opt](https://github.com/KhronosGroup/SPIRV-Tools), and [SDL2](http://www.libsdl.org), then run:
 
 `swift build --configuration release --product ShaderTool`
 

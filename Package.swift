@@ -1,18 +1,18 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "ImGuiDemo",
-    platforms: [.macOS(.v10_14)],
+    platforms: [.macOS(.v11)],
     dependencies: [
-        .package(url: "https://github.com/troughton/Substrate", from: "6.0.6"),
+        .package(name: "Substrate", url: "https://github.com/troughton/SubstrateRender", .branch("async-await")),
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "ImGuiDemo",
-            dependencies: ["AppFramework", "ShaderReflection"],
+            dependencies: [.product(name: "AppFramework", package: "Substrate"), "ShaderReflection"],
             linkerSettings: [.linkedFramework("AppKit", .when(platforms: [.macOS]))]),
         .target(name: "ShaderReflection", dependencies: [.product(name: "Substrate", package: "Substrate"), .product(name: "SubstrateMath", package: "Substrate")]),
         .testTarget(

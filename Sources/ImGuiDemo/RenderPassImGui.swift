@@ -40,6 +40,7 @@ final class ImGuiPass : ReflectableDrawRenderPass {
     static let pipelineDescriptor : RenderPipelineDescriptor = {
         var descriptor = RenderPipelineDescriptor(attachmentCount: 1)
         
+        descriptor.fillMode = .fill
         descriptor.vertexDescriptor = ImGuiPass.vertexDescriptor
         
         var blendDescriptor = BlendDescriptor()
@@ -116,12 +117,10 @@ final class ImGuiPass : ReflectableDrawRenderPass {
         self.renderTargetDescriptor = renderTargetDescriptor
     }
     
-    func execute(renderCommandEncoder renderEncoder: TypedRenderCommandEncoder<ImGuiPassReflection>) {
+    func execute(renderCommandEncoder renderEncoder: TypedRenderCommandEncoder<ImGuiPassReflection>) async {
         if renderData.vertexBuffer.isEmpty {
             return
         }
-        
-        renderEncoder.setTriangleFillMode(.fill)
         
         let vertexBuffer = Buffer(descriptor: BufferDescriptor(length: renderData.vertexBuffer.count * MemoryLayout<ImDrawVert>.size, usage: .vertexBuffer), bytes: renderData.vertexBuffer.baseAddress!)
         let indexBuffer = Buffer(descriptor: BufferDescriptor(length: renderData.indexBuffer.count * MemoryLayout<ImDrawIdx>.size, usage: .indexBuffer), bytes: renderData.indexBuffer.baseAddress!)
@@ -192,7 +191,7 @@ final class ImGuiPass : ReflectableDrawRenderPass {
                             renderEncoder.set0.floatTexture = texture
                         }
                         
-                        renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: Int(pcmd.ElemCount), indexType: MemoryLayout<ImDrawIdx>.size == 2 ? .uint16 : .uint32, indexBuffer: indexBuffer, indexBufferOffset: drawCommand.indexBufferByteOffset + MemoryLayout<ImDrawIdx>.size * idxBufferOffset)
+                        await renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: Int(pcmd.ElemCount), indexType: MemoryLayout<ImDrawIdx>.size == 2 ? .uint16 : .uint32, indexBuffer: indexBuffer, indexBufferOffset: drawCommand.indexBufferByteOffset + MemoryLayout<ImDrawIdx>.size * idxBufferOffset)
                     }
                 }
                 

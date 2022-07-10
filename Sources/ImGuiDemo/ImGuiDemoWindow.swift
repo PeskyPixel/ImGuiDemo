@@ -33,6 +33,6 @@ final class ImGuiDemoWindow : WindowDelegate {
     
     func update(frame: UInt64, deltaTime: Double) {
         var opened = true
-        ImGui.showDemoWindow(opened: &opened)
+        ImGui.showDemoWindow(isOpen: &opened)
     }
 }

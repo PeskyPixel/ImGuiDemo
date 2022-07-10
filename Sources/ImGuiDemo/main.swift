@@ -22,4 +22,12 @@ let delegate = ImGuiAppDelegate()
 
 let renderGraph = RenderGraph(inflightFrameCount: inflightFrameCount)
 
-let _ = SDLUpdateScheduler(appDelegate: delegate, windowDelegates: [ImGuiDemoWindow(renderGraph: renderGraph)], windowRenderGraph: renderGraph)
+Task {
+    let _ = await SDLUpdateScheduler(appDelegate: delegate, windowDelegates: [ImGuiDemoWindow(renderGraph: renderGraph)], windowRenderGraph: renderGraph)
+}
+
+#if canImport(Darwin)
+RunLoop.main.run()
+#else
+dispatchMain()
+#endif

@@ -5,9 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "ImGuiDemo",
-    platforms: [.macOS(.v11)],
+    platforms: [.macOS(.v11), .iOS(.v14), .tvOS(.v14)],
     dependencies: [
-        .package(name: "Substrate", url: "https://github.com/troughton/SubstrateRender", .branch("async-await")),
+        .package(name: "Substrate", url: "https://github.com/troughton/SubstrateRender", from: "8.1.0"),
     ],
     targets: [
         .executableTarget(

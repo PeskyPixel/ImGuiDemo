@@ -1,6 +1,6 @@
 //
 //  RenderPassImgui.swift
-//  InterdimensionalLlama
+//
 //
 //  Created by Thomas Roughton on 6/04/17.
 //
@@ -11,8 +11,9 @@ import Substrate
 import SubstrateMath
 import CImGui
 import ImGui
-
 import ShaderReflection
+
+typealias X = ShaderReflection.ImGuiPassReflection
 
 final class ImGuiPass : ReflectableDrawRenderPass {
     
@@ -35,24 +36,6 @@ final class ImGuiPass : ReflectableDrawRenderPass {
         vertexDescriptor.layouts[0].stepFunction = .perVertex
         
         return vertexDescriptor
-    }()
-    
-    static let pipelineDescriptor : RenderPipelineDescriptor = {
-        var descriptor = RenderPipelineDescriptor(attachmentCount: 1)
-        
-        descriptor.fillMode = .fill
-        descriptor.vertexDescriptor = ImGuiPass.vertexDescriptor
-        
-        var blendDescriptor = BlendDescriptor()
-        blendDescriptor.sourceRGBBlendFactor = .sourceAlpha
-        blendDescriptor.sourceAlphaBlendFactor = .sourceAlpha
-        blendDescriptor.destinationRGBBlendFactor = .oneMinusSourceAlpha
-        blendDescriptor.destinationAlphaBlendFactor = .oneMinusSourceAlpha
-        
-        descriptor.blendStates[0] = blendDescriptor
-        descriptor.label = "ImGui Pass Pipeline"
-        
-        return descriptor
     }()
     
     static let samplerDescriptor : SamplerDescriptor = {
@@ -110,11 +93,11 @@ final class ImGuiPass : ReflectableDrawRenderPass {
     
     let name = "ImGui"
     let renderData : ImGui.RenderData
-    let renderTargetDescriptor: RenderTargetDescriptor
+    let renderTargetsDescriptor: RenderTargetsDescriptor
     
-    init(renderData: ImGui.RenderData, renderTargetDescriptor: RenderTargetDescriptor) {
+    init(renderData: ImGui.RenderData, renderTargetsDescriptor: RenderTargetsDescriptor) {
         self.renderData = renderData
-        self.renderTargetDescriptor = renderTargetDescriptor
+        self.renderTargetsDescriptor = renderTargetsDescriptor
     }
     
     func execute(renderCommandEncoder renderEncoder: TypedRenderCommandEncoder<ImGuiPassReflection>) async {
@@ -130,12 +113,23 @@ final class ImGuiPass : ReflectableDrawRenderPass {
         let displayWidth = Float(self.renderData.displaySize.x)
         let displayHeight = Float(self.renderData.displaySize.y)
         
-        let fbWidth = self.renderTargetDescriptor.size.width
-        let fbHeight = self.renderTargetDescriptor.size.height
+        let fbWidth = self.renderTargetsDescriptor.size.width
+        let fbHeight = self.renderTargetsDescriptor.size.height
         let fbWidthF = Float(fbWidth)
         let fbHeightF = Float(fbHeight)
         
-        renderEncoder.pipeline.descriptor = ImGuiPass.pipelineDescriptor
+        renderEncoder.pipeline.descriptor.fillMode = .fill
+        renderEncoder.pipeline.vertexDescriptor = ImGuiPass.vertexDescriptor
+        
+        var blendDescriptor = BlendDescriptor()
+        blendDescriptor.sourceRGBBlendFactor = .sourceAlpha
+        blendDescriptor.sourceAlphaBlendFactor = .sourceAlpha
+        blendDescriptor.destinationRGBBlendFactor = .oneMinusSourceAlpha
+        blendDescriptor.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+        
+        renderEncoder.pipeline.blendStates[0] = blendDescriptor
+        renderEncoder.pipeline.label = "ImGui Pass Pipeline"
+        
         renderEncoder.pipeline.vertexFunction =  .vertex
         renderEncoder.pipeline.fragmentFunction =  .fragment
         renderEncoder.depthStencil = DepthStencilDescriptor()
